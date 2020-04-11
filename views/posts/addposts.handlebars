@@ -1,0 +1,24 @@
+<div class="col-md-10 offset-1 card mt-4">
+
+    <div class="card-body">
+        <h1 class="display-5 text-left">Add posts</h1>
+        <form class="ui form" action="/posts/addposts" method="POST">
+
+
+            <div class="field">
+                <label>Title</label>
+                <input type="text" name="title" placeholder=" add Title">
+            </div>
+
+            <div class="field">
+                <label>Details</label>
+                <textarea spellcheck="false" placeholder="Add details" name="details"></textarea>
+            </div>
+
+            <button class="ui secondary button" type="submit">
+                submit
+            </button>
+
+        </form>
+    </div>
+</div>
