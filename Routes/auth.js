@@ -50,7 +50,8 @@ router.post("/register", (req, res) => {
       .then((user) => {
         if (user) {
           req.flash("error_msg", "Email is already exits...📧");
-          res.redirect("/auth/register");
+          // res.redirect("/auth/register");
+          // res.render('/', { "error_msg", "Email is already exits...📧"});
         } else {
           const newUser = new Users({
             name: req.body.name,
