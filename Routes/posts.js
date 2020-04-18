@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 // const multer = require("multer");
+var jsonexport = require("jsonexport");
 
 //load healper
 const { ensureAuthenticated } = require("../helpers/auth");
@@ -68,16 +69,31 @@ router.get("/users", (req, res) => {
           .sort({ date: "desc" })
           .then((users) => {
             console.log(users);
-            // res.render("posts/posts", {
-            //   user: users,
-            //   title: "Users page",
+            res.render("posts/posts", {
+              user: users,
+              title: "Users page",
+            });
+            var data = JSON.stringify(users);
+
+            // jsonexport(users, function (err, csv) {
+            //   if (err) return console.log(err);
+            //   console.log(csv);
+            //   res.setHeader(
+            //     "Content-disposition",
+            //     "attachment; filename= myFile.csv"
+            //   );
+            //   res.setHeader("Content-type", "text/csv");
+            //   res.write(csv, function (err) {
+            //     res.end();
+            //   });
             // });
+
           });
       } else {
-        // res.render("posts/posts", {
-        //   user: user,
-        //   title: "Users page",
-        // });
+        res.render("posts/posts", {
+          user: user,
+          title: "Users page",
+        });
       }
     })
     .catch((err) => console.log(err));

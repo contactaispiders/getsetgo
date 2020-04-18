@@ -1230,10 +1230,78 @@ p.form-message.error {
 .rounded {
   border-radius: 50% !important;
 }
-#faq{
+#faq {
   background-color: #333333 !important;
 }
 
 .single-pricing {
   height: 90% !important;
+}
+.mainChar {
+  color: orange;
+}
+.textSize {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+.m-1rem{
+  margin: 1rem !important;
+}
+/* .btn-grad:hover{
+  background-position: right center !important;
+  
+} */
+.p-5rem{
+  padding: 5rem  5rem 0rem 5rem!important;
+  /* padding-bottom:  0 !important; */
+}
+.c-white{
+  color: #fff !important;
+}
+.single-pricing{
+  height: 50% !important;
+}
+
+
+.social-link {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  border-radius: 50%;
+  transition: all 0.3s;
+  font-size: 2rem;
+}
+
+.social-link:hover, .social-link:focus {
+  background: #ddd;
+  text-decoration: none;
+  color: #555;
+}
+#pricing {
+  background: #e8cbc0;
+  background: -webkit-linear-gradient(to right, #e8cbc0, #636fa4);
+  background: linear-gradient(to right, #e8cbc0, #636fa4);
+  min-height: 100vh;
+}
+.lni-linkedin-original{
+  font-size: 2rem !important;
+}
+.h-90{
+  height: 90% !important;
+}
+.text-muted{
+  height: 38px !important;
+}
+.img-thumbnail{
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.fs-2rem{
+  font-size: 1.5rem !important;
+
 }

@@ -34,7 +34,7 @@ const UserSchema = new Schema({
   },
   yearOfCompletion: {
     type: Number,
-    required: false,
+    required: true,
   },
   role: {
     type: String,
@@ -44,6 +44,10 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  key:{
+    type:String,
+    required:true
+  }
 });
 
 mongoose.model("users", UserSchema);

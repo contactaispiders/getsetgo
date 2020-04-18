@@ -1,7 +1,5 @@
 <div class="ui grid mt-4">
     <div class="divtext">
-        {{#each user }}
-
         <table class="table table-bordered">
             <tr>
                 <th>Seq.</th>
@@ -12,8 +10,12 @@
                 <th>Degree</th>
                 <th>Passout year</th>
 
+                <th>key</th>
 
             </tr>
+            {{#each user }}
+
+
             <tr>
                 <td> {{@key}}</td>
                 <td>{{name}}</td>
@@ -21,12 +23,14 @@
                 <td>{{phonenumber}}</td>
                 <td>{{college}}</td>
                 <td>{{education}}</td>
-                {{!-- <td>{{yearOfCompletion}}</td> --}}
+                <td>{{yearOfCompletion}}</td>
+                <td>{{key}}</td>
 
             </tr>
+
+            {{else}}
         </table>
 
-        {{else}}
         <p class="text-danger">No Posts here</p>
         {{/each}}
     </div>

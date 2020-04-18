@@ -20,7 +20,7 @@ require("./config/passport")(passport);
 
 //handlebars
 
-Handlebars.registerHelper("trimString", function(passedString) {
+Handlebars.registerHelper("trimString", function (passedString) {
   var theString = [...passedString].splice(6).join("");
   return new Handlebars.SafeString(theString);
 });
@@ -34,14 +34,15 @@ const auth = require("./Routes/auth");
 
 //connection mongodb
 const mongodbUrl =
-  "mongodb+srv://jspiders:shashi123@cluster0-trwtz.mongodb.net/test?retryWrites=true&w=majority";
+  // "mongodb+srv://jspiders:shashi123@cluster0-trwtz.mongodb.net/test?retryWrites=true&w=majority";
+  "mongodb+srv://aispider:querty@123@getsetgodb-yn6hf.mongodb.net/Registration?retryWrites=true&w=majority";
 mongoose.connect(
   mongodbUrl,
   {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
   },
-  err => {
+  (err) => {
     if (err) throw err;
     console.log("database connected");
   }
@@ -74,7 +75,7 @@ app.use(
   session({
     secret: "keyboard cat",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 
@@ -84,7 +85,7 @@ app.use(passport.session());
 app.use(flash());
 
 //global messages
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
@@ -94,18 +95,24 @@ app.use(function(req, res, next) {
 
 app.get("/", (req, res) => {
   // res.render("home.handlebars");
-  res.sendFile(__dirname + "/index.html")
+  res.sendFile(__dirname + "/index.html");
 });
 
 app.use("/posts", posts);
 app.use("/auth", auth);
 
+app.get("/emailExists", (req, res) => {
+  res.render("emailExists.handlebars");
+});
+app.get("/success", (req, res) => {
+  res.render("success.handlebars");
+});
 app.get("**", (req, res) => {
   res.render("404.handlebars");
 });
 
 const port = process.env.PORT || 7000;
-app.listen(port, err => {
+app.listen(port, (err) => {
   if (err) throw err;
   else console.log("Server is running on port Number " + port);
 });
