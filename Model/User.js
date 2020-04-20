@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
   },
   // password: {
   //   type: String,
@@ -28,10 +28,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  message: {
-    type: String,
-    required: false,
-  },
+  // message: {
+  //   type: String,
+  //   required: false,
+  // },
   yearOfCompletion: {
     type: Number,
     required: true,

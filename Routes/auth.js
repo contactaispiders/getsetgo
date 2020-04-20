@@ -4,6 +4,8 @@ const passport = require("passport");
 const bcrypt = require("bcrypt");
 var nodemailer = require("nodemailer");
 const { Parser } = require("json2csv");
+var fs = require("fs");
+
 const mailjet = require("node-mailjet").connect(
   "6ad9d79033ce4f9de3d76e2b215975d9",
   "5980e787e08d7aee47d3e3d4c5d8ff76"
@@ -37,7 +39,8 @@ const generateUniqueKey = () => {
   });
 };
 
-const sendMailToAdmin = (data) => {
+const sendMailToAdmin = (call) => {
+  debugger;
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -50,13 +53,14 @@ const sendMailToAdmin = (data) => {
     from: "contact.aispiders@gmail.com",
     to: "contact.aispiders@gmail.com",
     subject: "Data of registered students",
-    text: "data of last 10 students  :-" + data,
+    text: "data of last 10 students attached below :-",
     attachments: [
-      {   // utf-8 string as an attachment
-          filename: 'users.csv',
-          path: 'data/users.csv'
-      }
-    ]
+      {
+        // utf-8 string as an attachment
+        filename: "users.csv",
+        path: "data/users.csv",
+      },
+    ],
     // html:
   };
 
@@ -64,51 +68,102 @@ const sendMailToAdmin = (data) => {
     if (error) {
       console.log(error);
     } else {
-      console.log("Email sent: " + info.response);
+      console.log("Email sent to admin with file");
+      call();
+      // return true;
     }
   });
 };
 
-const saveAsLocalCopy = (data) => {
-  const fields = [
-    "role",
-    "id",
-    "name",
-    "email",
-    "contact",
-    "education",
-    "college",
-    "year of completion",
-    "key",
-    "date",
-  ];
+const fields = [
+  "role",
+  "id",
+  "name",
+  "email",
+  "phonenumber",
+  "education",
+  "college",
+  "yearOfCompletion",
+  "key",
+  "date",
+];
+const json2csvParser = new Parser({ fields });
 
-  const json2csvParser = new Parser({ fields });
+const saveAsLocalCopy = (data, call) => {
+  debugger;
   const csv = json2csvParser.parse(data);
 
   console.log(csv);
+  fs.appendFile("data/users.csv", csv, function (err) {
+    if (err) throw err;
+    debugger;
+    console.log("Saved to users csv!");
+    sendMailToAdmin(call);
+  });
 
-  var fs = require("fs");
+  // data = JSON.stringify(data)
+  // if (fs.existsSync("data/users.json")) {
+  //   fs.appendFileSync("data/users.json", data, function (err) {
+  //     if (err) throw err;
+  //     console.log("Appended to users json!");
+  //     sendMailToAdmin(call) ;
 
-  if (fs.existsSync("data/users.csv")) {
-    fs.appendFile("data/users.csv", csv, function (err) {
+  //     // return true;
+  //   });
+  // } else {
+  //   fs.writeFileSync("data/users.json", data, function (err) {
+  //     if (err) throw err;
+  //     debugger
+  //     console.log("Saved to users json!");
+  //     sendMailToAdmin(call) ;
+
+  //     // return true;
+  //   });
+  // }
+};
+const connectoMongo = () => {
+  //connection mongodb
+  const mongodbUrl =
+    // "mongodb+srv://jspiders:shashi123@cluster0-trwtz.mongodb.net/test?retryWrites=true&w=majority";
+    "mongodb+srv://aispider:querty@123@getsetgodb-yn6hf.mongodb.net/Registration?retryWrites=true&w=majority";
+  mongoose.connect(
+    mongodbUrl,
+    {
+      // autoReconnect: true,
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    },
+    (err) => {
       if (err) throw err;
-      console.log("Appended to users csv!");
-    });
-  } else {
-    fs.writeFile("data/users.csv", csv, function (err) {
-      if (err) throw err;
-      console.log("Saved to users csv!");
-    });
-  }
+      console.log("database connected");
+    }
+  );
 };
 
+setInterval(() => {
+  checkDBCapacity()
+}, 21600000);
+
 const checkDBCapacity = () => {
-  Users.find({role:"User"})
+  debugger;
+  Users.find({ role: "User" })
     .then((users) => {
-      // if (users.length >= 10) {
-      sendMailToAdmin(users);
-      saveAsLocalCopy(users);
+      // if (users.length >= 5000) {
+        saveAsLocalCopy(users, function () {
+          Users.remove({ role: "User" })
+            .then((success) => {
+              console.log("database cleared");
+              connectoMongo();
+              // res.redirect("/success");
+            })
+            .catch((err) => {
+              console.log("database not cleared");
+            });
+        });
+      // }
+       //else {
+      //   res.redirect("/success");
       // }
     })
     .catch((err) => {});
@@ -118,39 +173,12 @@ const checkDBCapacity = () => {
 router.post("/register", (req, res) => {
   key = generateUniqueKey();
 
-  const errors = [];
-  // if (req.body.password != req.body.confirmpassword) {
-  //   errors.push({ text: "Password is not match" });
-  // }
-  // if (req.body.password.length < 4) {
-  //   errors.push({
-  //     text: "Password must be atleast 4 characters",
-  //   });
-  // }
-  debugger;
-  if (errors.length > 0) {
-    res.render("auth/register", {
-      errors: errors,
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      phonenumber: req.body.phonenumber,
-      education: req.body.education,
-      college: req.body.college,
-      password: req.body.password,
-      confirmpassword: req.body.confirmpassword,
-    });
-  } else {
-    checkDBCapacity();
     Users.findOne({ email: req.body.email })
       .then((user) => {
         if (user) {
           res.redirect("/emailExists");
-          // res.status(501).send("Email already exits...📧")
-          // req.flash("error_msg", "Email is already exits...📧");
-          // res.redirect("/auth/register");
-          // res.render('/', { "error_msg", "Email is already exits...📧"});
-        } else {
+        } else
+        {
           if (key) {
             const newUser = new Users({
               name: req.body.name,
@@ -158,19 +186,24 @@ router.post("/register", (req, res) => {
               phonenumber: req.body.phonenumber,
               education: req.body.education,
               college: req.body.college,
-              message: req.body.message,
               yearOfCompletion: req.body.yearOfCompletion,
-              // password: req.body.password,
               key: key,
             });
 
-            // bcrypt.genSalt(10, (err, salt) => {
-            //   bcrypt.hash(newUser.password, salt, (err, hash) => {
-            //     if (err) throw err;
-            //     newUser.password = hash;
             newUser
               .save()
               .then((user) => {
+                console.log("came");
+
+                // Users.count({role:"User"}, function (err, count) {
+                //   console.log("Number of docs: ", count);
+                //   if (count >= 500) {
+                //     checkDBCapacity(res);
+                //   } else {
+                    // res.redirect("/success");
+                //   }
+                // });
+
                 var transporter = nodemailer.createTransport({
                   service: "gmail",
                   auth: {
@@ -194,58 +227,18 @@ router.post("/register", (req, res) => {
                   if (error) {
                     console.log(error);
                   } else {
-                    console.log("Email sent: " + info.response);
+                    console.log("Email sent to User with key");
                   }
                 });
-
-                // const request = mailjet
-                //   .post("send", { version: "v3.1" })
-                //   .request({
-                //     Messages: [
-                //       {
-                //         From: {
-                //           Email: "jainchirag172@gmail.com",
-                //           Name: "chirag",
-                //         },
-                //         To: [
-                //           {
-                //             Email: "jainchirag172@gmail.com",
-                //             Name: "chirag",
-                //           },
-                //         ],
-                //         Subject: "Greetings from Mailjet.",
-                //         TextPart: "My first Mailjet email",
-                //         HTMLPart:
-                //           "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!",
-                //         CustomID: "AppGettingStartedTest",
-                //       },
-                //     ],
-                //   });
-                // request
-                //   .then((result) => {
-                //     console.log(result.body);
-                //   })
-                //   .catch((err) => {
-                //     console.log(err);
-
-                //     console.log(err.statusCode);
-                //   });
-
-                // res.send("successfully registered")
-                // req.flash("success_msg", "successfully user registered");
-                // res.redirect("/");
-                // checkDBCapacity();
 
                 res.redirect("/success");
               })
               .catch((err) => console.log(err));
-            //   });
-            // });
           }
         }
       })
       .catch((err) => console.log(err));
-  }
+  
 });
 
 //login post request

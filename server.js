@@ -33,20 +33,26 @@ const posts = require("./Routes/posts");
 const auth = require("./Routes/auth");
 
 //connection mongodb
+
+const mongoConnection = () =>{
 const mongodbUrl =
   // "mongodb+srv://jspiders:shashi123@cluster0-trwtz.mongodb.net/test?retryWrites=true&w=majority";
   "mongodb+srv://aispider:querty@123@getsetgodb-yn6hf.mongodb.net/Registration?retryWrites=true&w=majority";
 mongoose.connect(
   mongodbUrl,
   {
-    useUnifiedTopology: true,
+    autoReconnect: true,
+    useUnifiedTopology: false,
     useNewUrlParser: true,
+    useCreateIndex: true,
   },
   (err) => {
     if (err) throw err;
     console.log("database connected");
   }
 );
+}
+mongoConnection()
 
 //method override middleware
 // override with the X-HTTP-Method-Override header in the request

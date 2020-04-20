@@ -1244,24 +1244,23 @@ p.form-message.error {
   font-size: 18px !important;
   font-weight: 800 !important;
 }
-.m-1rem{
+.m-1rem {
   margin: 1rem !important;
 }
 /* .btn-grad:hover{
   background-position: right center !important;
   
 } */
-.p-5rem{
-  padding: 5rem  5rem 0rem 5rem!important;
+.p-5rem {
+  padding: 5rem 5rem 0rem 5rem !important;
   /* padding-bottom:  0 !important; */
 }
-.c-white{
+.c-white {
   color: #fff !important;
 }
-.single-pricing{
+.single-pricing {
   height: 50% !important;
 }
-
 
 .social-link {
   width: 30px;
@@ -1276,7 +1275,8 @@ p.form-message.error {
   font-size: 2rem;
 }
 
-.social-link:hover, .social-link:focus {
+.social-link:hover,
+.social-link:focus {
   background: #ddd;
   text-decoration: none;
   color: #555;
@@ -1287,21 +1287,46 @@ p.form-message.error {
   background: linear-gradient(to right, #e8cbc0, #636fa4);
   min-height: 100vh;
 }
-.lni-linkedin-original{
+.lni-linkedin-original {
   font-size: 2rem !important;
 }
-.h-90{
+.h-90 {
   height: 90% !important;
 }
-.text-muted{
+.text-muted {
   height: 38px !important;
 }
-.img-thumbnail{
+.img-thumbnail {
   width: 100px !important;
   height: 100px !important;
 }
 
-.fs-2rem{
+.fs-2rem {
   font-size: 1.5rem !important;
+}
+.centered {
+  justify-content: center !important;
+  display: flex !important;
+}
+.mt-2rem {
+  margin-top: 2rem !important;
+}
 
+.contact-form .single-form textarea,
+.contact-form .single-form select {
+  width: 100%;
+  height: 56px;
+  border: 1px solid #cbced1;
+  border-radius: 5px;
+  padding: 0 25px;
+  background-color: #fff;
+  font-size: 16px;
+}
+
+.text h3 {
+  color: #fff !important;
+}
+
+.aboutSet li {
+  margin-bottom: 2rem;
 }
