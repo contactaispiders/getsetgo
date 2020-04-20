@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 var nodemailer = require("nodemailer");
 const { Parser } = require("json2csv");
 var fs = require("fs");
+var schedule = require('node-schedule');
 
 const mailjet = require("node-mailjet").connect(
   "6ad9d79033ce4f9de3d76e2b215975d9",
@@ -141,10 +142,13 @@ const connectoMongo = () => {
   );
 };
 
-setInterval(() => {
-  checkDBCapacity()
-}, 21600000);
+// setInterval(() => {
+//   checkDBCapacity()
+// }, 60000);
 
+schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 0}, function() {
+  checkDBCapacity()
+});
 const checkDBCapacity = () => {
   debugger;
   Users.find({ role: "User" })
