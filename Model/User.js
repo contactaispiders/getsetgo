@@ -9,7 +9,19 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: false,
+    unique: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  usn: {
+    type: String,
+    required: true,
   },
   // password: {
   //   type: String,
@@ -44,10 +56,10 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  key:{
-    type:String,
-    required:true
-  }
+  key: {
+    type: String,
+    required: true,
+  },
 });
 
 mongoose.model("users", UserSchema);

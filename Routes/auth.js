@@ -187,6 +187,9 @@ router.post("/register", (req, res) => {
               education: req.body.education,
               college: req.body.college,
               yearOfCompletion: req.body.yearOfCompletion,
+              city:req.body.city,
+              state:req.body.state,
+              usn:req.body.usn,
               key: key,
             });
 
