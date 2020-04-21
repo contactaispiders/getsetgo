@@ -1330,3 +1330,8 @@ p.form-message.error {
 .aboutSet li {
   margin-bottom: 2rem;
 }
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #000 !important;
+  opacity: 1; /* Firefox */
+}
+

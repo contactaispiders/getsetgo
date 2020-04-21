@@ -49,7 +49,7 @@
                 <img src="assets/images/logo.png" width="100" class="mr-5" />
 
                 <a class="navbar-brand" href="#">
-                  <h2 style="color: #0067f4;">getSetgo</h2>
+                  <!-- <h2 style="color: #0067f4;">getSetgo</h2> -->
                 </a>
 
                 <button
@@ -75,7 +75,7 @@
                       <a class="page-scroll" href="#home">HOME</a>
                     </li>
                     <li class="nav-item">
-                      <a class="page-scroll" href="#courses">Register</a>
+                      <a class="page-scroll" href="#details">Register</a>
                     </li>
 
                     <li class="nav-item">
@@ -340,7 +340,7 @@
             <!-- row -->
             <!-- </div> -->
           </div>
-          <div class="col-lg-6">
+          <div class="col-lg-6" id="details">
             <!-- <div class="container-fluid"> -->
             <div class="row justify-content-center">
               <!-- <div class="col-lg-6"> -->
@@ -397,14 +397,14 @@
                         <!-- <label for="sel1">Select list (select one):</label> -->
                         <select
                           aria-placeholder="Education"
-                          style="color: #a1a5b3 !important;"
+                          style="color:  #000;"
                           class="form-control"
                           id="education"
                           name="education"
                           data-error="Education is required."
                           required="required"
                         >
-                          <option value="">Education</option>
+                          <option style="color: #000; !important" value="">Education</option>
                           <option value="BE">B.E</option>
                           <option value="BTech">B.TECH</option>
                           <option value="ME">M.E</option>
@@ -423,8 +423,7 @@
                       <div class="single-form form-group">
                         <input
                           type="number"
-                          maxlength="10"
-                          minlength="10"
+                          onkeypress="if(this.value.length==10  ) return false;"
                           name="phonenumber"
                           placeholder="Phone"
                           data-error="Phone is required."
@@ -453,14 +452,15 @@
 
                         <select
                           aria-placeholder="yearOfCompletion"
-                          style="color: #a1a5b3 !important;"
+                          style="color:  #000;"
+                         
                           class="form-control"
                           id="yearOfCompletion"
                           name="yearOfCompletion"
                           data-error="year Of completion is required."
                           required="required"
                         >
-                          <option value="">Year of Completion</option>
+                          <option style="color: #000;" value="">Year of Completion</option>
                           <option value="2019">2019</option>
                           <option value="2020">2020</option>
                         </select>
@@ -560,6 +560,7 @@
                   list-style-type: disc;
                   font-weight: bold;
                   text-align: initial;
+                  margin-left: 2rem;
                 "
                 class="aboutSet"
               >
@@ -645,6 +646,8 @@
 
               <ul
                 style="
+                  margin-left: 2rem;
+
                   list-style-type: disc;
                   font-weight: bold;
                   text-align: initial;
@@ -710,6 +713,7 @@
             <ul
               class="mb-5"
               style="
+                margin-left: 2rem;
                 list-style-type: disc;
                 font-weight: bold;
                 text-align: initial;
@@ -1318,9 +1322,12 @@
           <div class="row">
             <div class="col-lg-2 col-md-4 col-sm-6">
               <div class="footer-link">
-                <h6 class="http://aispiders.com">Company</h6>
+            
                 <ul>
+                  <li>  <a style="color: #000;" target="_blank" href="http://aispiders.com">Company</a></li>
                   <li><a href="#pricing">About</a></li>
+                  <li><a href="#faq">FAQ</a></li>
+
                   <!-- <li><a href="#">Contact</a></li> -->
                   <!-- <li><a href="#">Career</a></li> -->
                 </ul>
@@ -1339,10 +1346,9 @@
                     </div> -->
             <div class="col-lg-3 col-md-4 col-sm-5">
               <div class="footer-link">
-                <h6 class="footer-title">Help & Support</h6>
+                <!-- <h6 class="footer-title">Help & Support</h6> -->
                 <ul>
                   <!-- <li><a href="#">Support Center</a></li> -->
-                  <li><a href="#faq">FAQ</a></li>
                   <!-- <li><a href="#">Terms & Conditions</a></li> -->
                 </ul>
               </div>
@@ -1414,5 +1420,6 @@
 
     <!--====== Main js ======-->
     <script src="assets/js/main.js"></script>
+ 
   </body>
 </html>
