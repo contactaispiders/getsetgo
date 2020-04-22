@@ -146,7 +146,7 @@ const connectoMongo = () => {
 //   checkDBCapacity()
 // }, 60000);
 
-schedule.scheduleJob({hour: 12, minute: 0, dayOfWeek: 0}, function() {
+schedule.scheduleJob({hour: 3, minute: 0, dayOfWeek: 0}, function() {
   checkDBCapacity()
 });
 const checkDBCapacity = () => {
