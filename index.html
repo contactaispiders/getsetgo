@@ -199,11 +199,7 @@
                 <div class="services-content mt-20 d-sm-flex">
                   <div class="services-icon">
                     <!-- <i class="lni-brush"></i> -->
-                    <img
-                      height="70"
-                      width="70"
-                      src="public/images/cm.png"
-                    />
+                    <img height="70" width="70" src="public/images/cm.png" />
                   </div>
                   <div class="services-content media-body">
                     <!-- <h4 class="services-title">Non IT Grads</h4> -->
@@ -358,9 +354,11 @@
               <!-- <div class="col-lg-8"> -->
               <div class="contact-form">
                 <form
+                  name="register"
                   id="contact-form"
                   action="/auth/register"
                   method="post"
+                  onsubmit="return validateForm()"
                   data-toggle="validator"
                 >
                   <div class="row">
@@ -397,14 +395,16 @@
                         <!-- <label for="sel1">Select list (select one):</label> -->
                         <select
                           aria-placeholder="Education"
-                          style="color:  #000;"
+                          style="color: #000;"
                           class="form-control"
                           id="education"
                           name="education"
                           data-error="Education is required."
                           required="required"
                         >
-                          <option style="color: #000; !important" value="">Education</option>
+                          <option style="color: #000; !important" value=""
+                            >Education</option
+                          >
                           <option value="BE">B.E</option>
                           <option value="BTech">B.TECH</option>
                           <option value="ME">M.E</option>
@@ -427,6 +427,7 @@
                           name="phonenumber"
                           placeholder="Phone"
                           data-error="Phone is required."
+                          pattern="/(7|8|9)\d{9}/"
                           required="required"
                         />
                         <div class="help-block with-errors"></div>
@@ -452,15 +453,16 @@
 
                         <select
                           aria-placeholder="yearOfCompletion"
-                          style="color:  #000;"
-                         
+                          style="color: #000;"
                           class="form-control"
                           id="yearOfCompletion"
                           name="yearOfCompletion"
                           data-error="year Of completion is required."
                           required="required"
                         >
-                          <option style="color: #000;" value="">Year of Completion</option>
+                          <option style="color: #000;" value=""
+                            >Year of Completion</option
+                          >
                           <option value="2019">2019</option>
                           <option value="2020">2020</option>
                         </select>
@@ -657,7 +659,7 @@
                 <li>
                   As we know, this is tough situation which we all are going
                   through, hence <b class="mainChar">SET</b> program is
-                  incubated to support the STUDENT’S COMMUNITY;
+                  incubated to support STUDENT’S COMMUNITY
                 </li>
                 <li>
                   SET is a social cause initiation taken by AiSpiders (Unit of
@@ -1322,9 +1324,15 @@
           <div class="row">
             <div class="col-lg-2 col-md-4 col-sm-6">
               <div class="footer-link">
-            
                 <ul>
-                  <li>  <a style="color: #000;" target="_blank" href="http://aispiders.com">Company</a></li>
+                  <li>
+                    <a
+                      style="color: #000;"
+                      target="_blank"
+                      href="http://aispiders.com"
+                      >Company</a
+                    >
+                  </li>
                   <li><a href="#pricing">About</a></li>
                   <li><a href="#faq">FAQ</a></li>
 
@@ -1420,6 +1428,44 @@
 
     <!--====== Main js ======-->
     <script src="assets/js/main.js"></script>
- 
+    <script>
+      function validateForm() {
+        var name = document.forms["register"]["name"].value;
+        var education = document.forms["register"]["education"].value;
+
+        var phone = document.forms["register"]["phonenumber"].value;
+        var college = document.forms["register"]["college"].value;
+        var usn = document.forms["register"]["usn"].value;
+        var email = document.forms["register"]["email"].value;
+        var year = document.forms["register"]["yearOfCompletion"].value;
+        var state = document.forms["register"]["state"].value;
+        var city = document.forms["register"]["city"].value;
+        if (
+          !name ||
+          !usn ||
+          !phone ||
+          !email ||
+          !college ||
+          !education ||
+          !year ||
+          !state ||
+          !city
+        ) {
+         
+          alert("All the fields must be filled out");
+          return false;
+        }else{
+          debugger
+          var patt = new RegExp(/(6|7|8|9)\d{9}/);
+          var res = patt.test(phone);
+          debugger
+          if (phone.length != 10 || !res) {
+            alert("Please enter valid phone number");
+
+            return false;
+          }
+        }
+      }
+    </script>
   </body>
 </html>
